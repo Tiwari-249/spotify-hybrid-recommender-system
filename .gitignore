@@ -1,0 +1,17 @@
+# Virtual Environment
+myenv/
+venv/
+env/
+
+# Data files
+*.csv
+*.npz
+*.npy
+*.joblib
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+
+# DVC cache
+.dvc/cache/
