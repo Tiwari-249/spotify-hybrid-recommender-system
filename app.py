@@ -1,8 +1,8 @@
 import streamlit as st
+import streamlit.components.v1 as components  
 from content_based_filtering import content_recommendation
 from scipy.sparse import load_npz
 import pandas as pd
-
 
 # load the data
 cleaned_data_path = "data/cleaned_data.csv"
@@ -37,6 +37,7 @@ k = st.selectbox(
     index=1
 )
 
+
 # Button
 if st.button('Get Recommendations'):
 
@@ -45,7 +46,7 @@ if st.button('Get Recommendations'):
 
         st.write(
             'Recommendations for',
-            f"**{song_name}** by **{artist_name}**"
+            f"**{song_name.title()}** by **{artist_name.title()}**"
         )
 
         recommendations = content_recommendation(
@@ -56,16 +57,18 @@ if st.button('Get Recommendations'):
             k=k
         )
 
+
         # Display Recommendations
         for ind, recommendation in recommendations.iterrows():
-
-            song_name = recommendation['name'].title()
-            artist_name = recommendation['artist'].title()
+            
+            # Variables ka naam thoda change kiya taaki upar wale input se clash na ho
+            rec_song_name = recommendation['name'].title()
+            rec_artist_name = recommendation['artist'].title()
 
             if ind == 0:
                 st.markdown("## Currently Playing")
                 st.markdown(
-                    f"#### **{song_name}** by **{artist_name}**"
+                    f"#### **{rec_song_name}** by **{rec_artist_name}**"
                 )
                 st.audio(recommendation['spotify_preview_url'])
                 st.write('---')
@@ -73,17 +76,33 @@ if st.button('Get Recommendations'):
             elif ind == 1:
                 st.markdown("### Next Up 🎵")
                 st.markdown(
-                    f"#### {ind}. **{song_name}** by **{artist_name}**"
+                    f"#### {ind}. **{rec_song_name}** by **{rec_artist_name}**"
                 )
                 st.audio(recommendation['spotify_preview_url'])
                 st.write('---')
 
             else:
                 st.markdown(
-                    f"#### {ind}. **{song_name}** by **{artist_name}**"
+                    f"#### {ind}. **{rec_song_name}** by **{rec_artist_name}**"
                 )
                 st.audio(recommendation['spotify_preview_url'])
                 st.write('---')
+                
+       
+
+        js_code = """
+        <script>
+        const audios = window.parent.document.querySelectorAll('audio');
+        audios.forEach(audio => {
+            audio.addEventListener('play', function() {
+                audios.forEach(a => {
+                    if (a !== audio) a.pause();
+                });
+            });
+        });
+        </script>
+        """
+        components.html(js_code, height=0)
 
     else:
         st.write(
