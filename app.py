@@ -1,4 +1,5 @@
 import streamlit as st
+import streamlit.components.v1 as components 
 from content_based_filtering import content_recommendation
 from scipy.sparse import load_npz
 import pandas as pd
@@ -141,4 +142,19 @@ elif filtering_type == "Hybrid Recommender System":
                 st.markdown(f"#### {ind}. **{song_name}** by **{artist_name}**")
                 st.audio(recommendation['spotify_preview_url'])
                 st.write('---')
-                
+
+
+components.html(
+    """
+    <script>
+    window.parent.document.addEventListener('play', function(e) {
+        if (e.target.tagName === 'AUDIO') {
+            window.parent.document.querySelectorAll('audio').forEach((audio) => {
+                if (audio !== e.target) audio.pause();
+            });
+        }
+    }, true);
+    </script>
+    """, 
+    height=0
+)
