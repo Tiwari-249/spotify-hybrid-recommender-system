@@ -1,0 +1,5 @@
+[core]
+    remote = storage
+['remote "storage"']
+    url = s3://spotifydvcbuckets
+    region = ap-south-1

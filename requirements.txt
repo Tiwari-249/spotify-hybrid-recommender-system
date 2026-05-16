@@ -6,3 +6,5 @@ streamlit
 joblib
 category-encoders
 dask
+dvc
+dvc[s3]
