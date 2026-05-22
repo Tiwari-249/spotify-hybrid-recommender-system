@@ -90,6 +90,7 @@ jobs:
             --application-name myspotifyhybridrecommendersystem \
             --deployment-config-name CodeDeployDefault.AllAtOnce \
             --deployment-group-name myspotifyhybridrecsysdeploymentgroup \
-            --s3-location bucket=hybridrecsysdeploymentbucket,key=deployment.zip,bundleType=zip \
+            --s3-location bucket=myspotifyhybridrecsecdeploymentbucket,key=deployment.zip,bundleType=zip \
             --file-exists-behavior OVERWRITE \
             --region ap-south-1
+            
